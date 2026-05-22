@@ -85,12 +85,7 @@ namespace BroadcastDecay.Rendering
                 historyDesc.msaaSamples = 1;
                 historyDesc.depthStencilFormat = GraphicsFormat.None;
 
-                RenderingUtils.ReAllocateHandleIfNeeded(
-                    ref state.history,
-                    historyDesc,
-                    FilterMode.Bilinear,
-                    TextureWrapMode.Clamp,
-                    name: "_CustomTaaHistory");
+                ReallocateHistoryIfNeeded(ref state.history, historyDesc, "_CustomTaaHistory");
 
                 TextureHandle historyTexture = renderGraph.ImportTexture(state.history);
 
@@ -307,6 +302,41 @@ namespace BroadcastDecay.Rendering
             }
 
             return result;
+        }
+        private static void ReallocateHistoryIfNeeded(ref RTHandle handle, in RenderTextureDescriptor descriptor, string name)
+        {
+            bool needsAlloc =
+                handle == null
+                || handle.rt == null
+                || handle.rt.width != descriptor.width
+                || handle.rt.height != descriptor.height
+                || handle.rt.descriptor.graphicsFormat != descriptor.graphicsFormat
+                || handle.rt.descriptor.depthStencilFormat != descriptor.depthStencilFormat
+                || handle.rt.descriptor.msaaSamples != descriptor.msaaSamples;
+
+            if (!needsAlloc)
+                return;
+
+            if (handle != null)
+                RTHandles.Release(handle);
+
+            GraphicsFormat format = descriptor.depthStencilFormat != GraphicsFormat.None
+                ? descriptor.depthStencilFormat
+                : descriptor.graphicsFormat;
+
+            RTHandleAllocInfo allocInfo = new RTHandleAllocInfo(name: name)
+            {
+                format = format,
+                filterMode = FilterMode.Bilinear,
+                wrapModeU = TextureWrapMode.Clamp,
+                wrapModeV = TextureWrapMode.Clamp,
+                msaaSamples = (MSAASamples)descriptor.msaaSamples,
+                dimension = descriptor.dimension,
+                useDynamicScale = descriptor.useDynamicScale,
+                useDynamicScaleExplicit = descriptor.useDynamicScaleExplicit
+            };
+
+            handle = RTHandles.Alloc(descriptor.width, descriptor.height, allocInfo);
         }
     }
 }
