@@ -1,7 +1,8 @@
 # Custom TAA for URP (Unity 6)
 
-This is a custom TAA bypass that works with stacked cameras (base + overlay). It was implemented for Universal Render Pipeline using a `ScriptableRendererFeature` + full-screen shader. 
-It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). Can be applied before or after post processing.
+This is a custom TAA bypass that works with stacked cameras (base + overlay). It was implemented for Universal Render Pipeline using a `ScriptableRendererFeature` + full-screen shader. It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). Can be applied before or after post processing.
+I did this workaround because my project needed the UI elements to be on a separate camera (mostly post processing related reasons). Unity does not allow Anti-Aliasing on stacked cameras (at least not for this version) and the aliasing in my project was too bad to ignore.
+I found many people with the same problem while I was searching for a solution, so I am uploading this here.
 
 ## Included Files
 
@@ -10,10 +11,10 @@ It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). 
 
 ## Requirements
 
-- Unity 6
-- URP (RenderGraph path)
-- Universal Renderer asset in use
-- Depth texture available (pass requests depth input)
+I made this for my project which uses Unity 6.4 (6000.4.1f1) so I will list this as the Unity requirement. I tried my best not to use deprecated or obsolete methods so hopefully it will work on future versions.
+
+- Unity 6.4 (6000.4.1f1). I did not test it in other versions, it may or may not work.
+- Universal Render Pipeline project.
 
 ## Features
 
@@ -42,7 +43,7 @@ You can also use another custom shader and assign it under "TAA Shader" in the r
    - `CustomTaaRendererFeature.cs`
 2. Open the active Universal Renderer asset.
 3. Add **Custom Taa Renderer Feature** to Renderer Features.
-4. Optionally assign shader manually, or rely on `Shader.Find`.
+4. Assign shader manually in the "Taa Shader" field, or rely on `Shader.Find`.
 5. Tune settings in the feature inspector:
    - `Jitter Spread`
    - `History Weight`
@@ -51,6 +52,7 @@ You can also use another custom shader and assign it under "TAA Shader" in the r
 
 ## Suggested Starting Values
 
+This is what I am using in my project. Looks similar to Unity's native TAA.
 - `Jitter Spread`: `0.75`
 - `History Weight`: `0.90`
 - `Neighborhood Clamp`: `0.85`
