@@ -3,7 +3,7 @@
 This is a custom TAA bypass that works with stacked cameras (base + overlay). It was implemented for Universal Render Pipeline using a `ScriptableRendererFeature` + full-screen shader. It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). Can be applied before or after post processing.  
   
 I did this workaround because my project needed the UI elements to be on a separate camera (mostly post processing related reasons). Unity does not allow Anti-Aliasing on stacked cameras (at least not for this version) and the aliasing in my project was too bad to ignore.  
-I found many people with the same problem while I was searching for a solution, so I am uploading this here.
+I found many people with the same problem while searching for a solution, so I am uploading this here.
 
 ## Included Files
 
@@ -53,7 +53,7 @@ You can also use another custom shader and assign it under "TAA Shader" in the r
 
 ## Suggested Starting Values
 
-This is what I am using in my project. Looks similar to Unity's native TAA.
+This is what I am using in my project and looks similar to Unity's native TAA.
 - `Jitter Spread`: `0.75`
 - `History Weight`: `0.90`
 - `Neighborhood Clamp`: `0.85`
