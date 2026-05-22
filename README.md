@@ -1,7 +1,8 @@
 # Custom TAA for URP (Unity 6)
 
-This is a custom TAA bypass that works with stacked cameras (base + overlay). It was implemented for Universal Render Pipeline using a `ScriptableRendererFeature` + full-screen shader. It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). Can be applied before or after post processing.
-I did this workaround because my project needed the UI elements to be on a separate camera (mostly post processing related reasons). Unity does not allow Anti-Aliasing on stacked cameras (at least not for this version) and the aliasing in my project was too bad to ignore.
+This is a custom TAA bypass that works with stacked cameras (base + overlay). It was implemented for Universal Render Pipeline using a `ScriptableRendererFeature` + full-screen shader. It applies TAA on the base camera while ignoring overlay (UI, crosshairs etc.). Can be applied before or after post processing.  
+  
+I did this workaround because my project needed the UI elements to be on a separate camera (mostly post processing related reasons). Unity does not allow Anti-Aliasing on stacked cameras (at least not for this version) and the aliasing in my project was too bad to ignore.  
 I found many people with the same problem while I was searching for a solution, so I am uploading this here.
 
 ## Included Files
