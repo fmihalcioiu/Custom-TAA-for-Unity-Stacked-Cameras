@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 using CameraData = UnityEngine.Rendering.Universal.CameraData;
 using RenderingData = UnityEngine.Rendering.Universal.RenderingData;
 
-namespace BroadcastDecay.Rendering
+namespace Game.Rendering
 {
     public class CustomTaaRendererFeature : ScriptableRendererFeature
     {
